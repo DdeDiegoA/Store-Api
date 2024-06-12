@@ -10,8 +10,11 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { CreateProductDto, UpdateProdcutDto } from 'src/dtos/products.dto';
-import { ProductsService } from 'src/services/products.service';
+import {
+  CreateProductDto,
+  UpdateProdcutDto,
+} from 'src/products/dtos/products.dto';
+import { ProductsService } from 'src/products/services/products.service';
 
 //* A difrencia de app controller nuestro decorador contiene @controller('products')
 

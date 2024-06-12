@@ -8,9 +8,12 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { CreateCategoryDto, UpdateCategoryDto } from 'src/dtos/category.dto';
-import { Category } from 'src/entities/category.entity';
-import { CategoryService } from 'src/services/category.service';
+import {
+  CreateCategoryDto,
+  UpdateCategoryDto,
+} from 'src/products/dtos/category.dto';
+import { Category } from 'src/products/entities/category.entity';
+import { CategoryService } from 'src/products/services/category.service';
 
 //* A difrencia de app controller nuestro decorador contiene @controller('categories')
 
