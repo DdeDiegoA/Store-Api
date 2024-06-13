@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto, UpdateUserDto } from 'src/users/dtos/users.dto';
 import { User } from 'src/users/entities/users.entity';
 import { Order } from '../entities/order.entity';
@@ -6,7 +6,10 @@ import { ProductsService } from 'src/products/services/products.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private productsService: ProductsService) {}
+  constructor(
+    private productsService: ProductsService,
+    @Inject('DATA') private tasks: any[],
+  ) {}
 
   private idUser = 1;
   private users: User[] = [
@@ -20,6 +23,7 @@ export class UsersService {
   ];
 
   findAll() {
+    console.log(this.tasks);
     return this.users;
   }
 

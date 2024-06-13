@@ -4,9 +4,10 @@ import { CustomersService } from './services/customers.service';
 import { UsersController } from './controllers/users.controller';
 import { UsersService } from './services/users.service';
 import { ProductsModule } from 'src/products/products.module';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports: [ProductsModule],
+  imports: [ProductsModule, HttpModule],
   controllers: [CustomersController, UsersController],
   providers: [CustomersService, UsersService],
 })
