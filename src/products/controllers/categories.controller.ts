@@ -8,6 +8,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import {
   CreateCategoryDto,
   UpdateCategoryDto,
@@ -16,7 +17,7 @@ import { Category } from 'src/products/entities/category.entity';
 import { CategoryService } from 'src/products/services/category.service';
 
 //* A difrencia de app controller nuestro decorador contiene @controller('categories')
-
+@ApiTags('categories')
 @Controller('categories')
 export class CategoriesController {
   constructor(private readonly categoryService: CategoryService) {}

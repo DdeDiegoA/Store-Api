@@ -10,6 +10,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import {
   CreateProductDto,
   UpdateProdcutDto,
@@ -17,7 +18,7 @@ import {
 import { ProductsService } from 'src/products/services/products.service';
 
 //* A difrencia de app controller nuestro decorador contiene @controller('products')
-
+@ApiTags('products')
 @Controller('products')
 export class ProductsController {
   //* esto implica que tenemos la raiz "products" de manera implicita
@@ -42,6 +43,10 @@ export class ProductsController {
   //* esta ruta seria => "products/:productId"
 
   @Get(':productId')
+  @ApiOperation({
+    summary: 'get a product by ID',
+    description: 'you would send a Id in the url, then returns the product',
+  })
   getProductById(@Param('productId', ParseIntPipe) productId: number) {
     // return `product id: ${productId}`;
     return this.productsService.findOne(productId);
