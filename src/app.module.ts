@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ProductsModule } from './products/products.module';
 import * as Joi from 'joi';
-import { Client } from 'pg';
 
 import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
@@ -10,16 +9,6 @@ import { enviroments } from './enviroments';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import config from './config';
-
-const client = new Client({
-  user: 'root',
-  host: 'localhost',
-  database: 'my_db',
-  password: '123456',
-  port: 5432,
-});
-
-client.connect();
 
 @Module({
   imports: [
