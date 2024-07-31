@@ -12,8 +12,7 @@ export class AppService {
 
   getHello(): string {
     const apiKey = this.configService.apiKey;
-    const name = this.configService.database.name;
-    return `apiKey: ${apiKey} name:${name}`;
+    return `apiKey: ${apiKey}`;
   }
 
   async getTasks(): Promise<any> {

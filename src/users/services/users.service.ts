@@ -4,12 +4,14 @@ import { User } from 'src/users/entities/users.entity';
 import { Order } from '../entities/order.entity';
 import { ProductsService } from 'src/products/services/products.service';
 import { ConfigService } from '@nestjs/config';
+import { Client } from 'pg';
 
 @Injectable()
 export class UsersService {
   constructor(
     private productsService: ProductsService,
     @Inject('DATA') private tasks: any[],
+    @Inject('PG') private clientPg: Client,
     private configService: ConfigService,
   ) {}
 
@@ -81,5 +83,14 @@ export class UsersService {
       user,
       products: this.productsService.findAll(),
     };
+  }
+
+  async getTasks(): Promise<any> {
+    try {
+      const res = await this.clientPg.query('SELECT * FROM tasks');
+      return res.rows;
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 }
