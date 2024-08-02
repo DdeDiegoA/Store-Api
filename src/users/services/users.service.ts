@@ -76,12 +76,12 @@ export class UsersService {
     return deletedUser;
   }
 
-  getOrdersByUser(id: User['id']): Order {
+  async getOrdersByUser(id: User['id']): Promise<Order> {
     const user = this.findOne(id);
     return {
       date: new Date(),
       user,
-      products: this.productsService.findAll(),
+      products: await this.productsService.findAll(),
     };
   }
 

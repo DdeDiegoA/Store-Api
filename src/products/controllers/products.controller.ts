@@ -1,20 +1,12 @@
 import {
-  Body,
   Controller,
-  Delete,
   Get,
   HttpCode,
   HttpStatus,
   Param,
   ParseIntPipe,
-  Post,
-  Put,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import {
-  CreateProductDto,
-  UpdateProdcutDto,
-} from 'src/products/dtos/products.dto';
 import { ProductsService } from 'src/products/services/products.service';
 
 //* A difrencia de app controller nuestro decorador contiene @controller('products')
@@ -52,32 +44,32 @@ export class ProductsController {
     return this.productsService.findOne(productId);
   }
 
-  @Post()
-  create(@Body() payload: CreateProductDto) {
-    // return {
-    //   message: 'producto creado',
-    //   payload,
-    // };
-    return this.productsService.create(payload);
-  }
+  // @Post()
+  // create(@Body() payload: CreateProductDto) {
+  //   // return {
+  //   //   message: 'producto creado',
+  //   //   payload,
+  //   // };
+  //   return this.productsService.create(payload);
+  // }
 
-  @Put(':id')
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() payload: UpdateProdcutDto,
-  ) {
-    // return {
-    //   id,
-    //   payload,
-    // };
-    return this.productsService.update(id, payload);
-  }
+  // @Put(':id')
+  // update(
+  //   @Param('id', ParseIntPipe) id: number,
+  //   @Body() payload: UpdateProdcutDto,
+  // ) {
+  //   // return {
+  //   //   id,
+  //   //   payload,
+  //   // };
+  //   return this.productsService.update(id, payload);
+  // }
 
-  @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number) {
-    // return {
-    //   message: `the element with the id:${id} was deleted`,
-    // };
-    return this.productsService.delete(id);
-  }
+  // @Delete(':id')
+  // delete(@Param('id', ParseIntPipe) id: number) {
+  //   // return {
+  //   //   message: `the element with the id:${id} was deleted`,
+  //   // };
+  //   return this.productsService.delete(id);
+  // }
 }
