@@ -12,7 +12,6 @@ import {
   CreateCustomerDto,
   UpdateCustomerDto,
 } from 'src/users/dtos/customers.dto';
-import { Customer } from 'src/users/entities/customer.entity';
 import { CustomersService } from '../services/customers.service';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -27,7 +26,7 @@ export class CustomersController {
   }
 
   @Get(':id')
-  getCustomerByIDd(@Param('id', ParseIntPipe) id: Customer['id']) {
+  getCustomerByIDd(@Param('id', ParseIntPipe) id: number) {
     return this.customersService.findOne(id);
   }
 
@@ -38,14 +37,14 @@ export class CustomersController {
 
   @Put(':id')
   updateCustomer(
-    @Param('id', ParseIntPipe) id: Customer['id'],
+    @Param('id', ParseIntPipe) id: number,
     @Body() data: UpdateCustomerDto,
   ) {
     return this.customersService.update(id, data);
   }
 
   @Delete(':id')
-  deleteCustomer(@Param('id', ParseIntPipe) id: Customer['id']) {
+  deleteCustomer(@Param('id', ParseIntPipe) id: number) {
     return this.customersService.delete(id);
   }
 }
