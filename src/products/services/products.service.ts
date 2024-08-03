@@ -25,14 +25,14 @@ export class ProductsService {
     return product;
   }
 
-  create(payload: CreateProductDto): Promise<Product> {
+  create(data: CreateProductDto): Promise<Product> {
     // const newProduct = new Product();
     // newProduct.image = payload.image;
     // newProduct.name = payload.name;
     // newProduct.description = payload.description;
     // newProduct.price = payload.price;
     // newProduct.stock = payload.stock;
-    const newProduct = this.productRepo.create(payload);
+    const newProduct = this.productRepo.create(data);
 
     return this.productRepo.save(newProduct);
   }

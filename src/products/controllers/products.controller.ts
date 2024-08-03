@@ -28,10 +28,10 @@ export class ProductsController {
     return this.productsService.findAll();
   }
 
-  @Get('/filter')
-  productFilter() {
-    return { message: `product filter` };
-  }
+  // @Get('/filter')
+  // productFilter() {
+  //   return { message: `product filter` };
+  // }
 
   //* esta ruta seria => "products/:productId"
 

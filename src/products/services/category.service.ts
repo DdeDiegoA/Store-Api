@@ -1,66 +1,43 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import {
   CreateCategoryDto,
   UpdateCategoryDto,
 } from 'src/products/dtos/category.dto';
 import { Category } from 'src/products/entities/category.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class CategoryService {
-  private idCounter = 1;
-  private categories: Category[] = [
-    {
-      id: 1,
-      name: 'categoria 1',
-      description: 'esta es mi nueva categoria',
-    },
-  ];
+  constructor(
+    @InjectRepository(Category) private categoryRepo: Repository<Category>,
+  ) {}
 
-  findAll(): Category[] {
-    return this.categories;
+  findAll(): Promise<Category[]> {
+    return this.categoryRepo.find();
   }
 
-  findOne(id: Category['id']): Category {
-    const category = this.categories.find((category) => category.id === id);
+  async findOne(id: Category['id']): Promise<Category> {
+    const category = await this.categoryRepo.findOneBy({ id });
     if (!category) {
       throw new NotFoundException(`the category with the ${id} doesnt exist`);
     }
     return category;
   }
 
-  private findIndex(id: Category['id']) {
-    const index = this.categories.findIndex((category) => category.id === id);
-    if (index === -1) {
-      throw new NotFoundException(`the category with the ${id} doesnt exist`);
-    }
-    return index;
+  create(data: CreateCategoryDto): Promise<Category> {
+    const newCategory = this.categoryRepo.create(data);
+    return this.categoryRepo.save(newCategory);
   }
 
-  create(data: CreateCategoryDto): Category {
-    this.idCounter += 1;
-    const newCategory = {
-      id: this.idCounter,
-      ...data,
-    };
-    this.categories.push(newCategory);
-    return newCategory;
-  }
+  async update(id: Category['id'], data: UpdateCategoryDto): Promise<Category> {
+    const category = await this.findOne(id);
+    this.categoryRepo.merge(category, data);
 
-  update(id: Category['id'], data: UpdateCategoryDto): Category {
-    const index = this.findIndex(id);
-    const category = this.categories[index];
-    const updatedCategory = {
-      ...category,
-      ...data,
-    };
-    this.categories[index] = updatedCategory;
-
-    return this.categories[index];
+    return this.categoryRepo.save(category);
   }
 
   delete(id: Category['id']) {
-    const categoryIndex = this.findIndex(id);
-    const deletedcategory = this.categories.splice(categoryIndex, 1)[0];
-    return deletedcategory;
+    return this.categoryRepo.delete(id);
   }
 }

@@ -13,7 +13,6 @@ import {
   CreateCategoryDto,
   UpdateCategoryDto,
 } from 'src/products/dtos/category.dto';
-import { Category } from 'src/products/entities/category.entity';
 import { CategoryService } from 'src/products/services/category.service';
 
 //* A difrencia de app controller nuestro decorador contiene @controller('categories')
@@ -28,13 +27,13 @@ export class CategoriesController {
   }
 
   @Get(':id')
-  getCategoriesById(@Param('id', ParseIntPipe) id: Category['id']) {
+  getCategoriesById(@Param('id', ParseIntPipe) id: number) {
     return this.categoryService.findOne(id);
   }
 
   @Put(':id')
   updateCategory(
-    @Param('id', ParseIntPipe) id: Category['id'],
+    @Param('id', ParseIntPipe) id: number,
     @Body() data: UpdateCategoryDto,
   ) {
     return this.categoryService.update(id, data);
@@ -46,7 +45,7 @@ export class CategoriesController {
   }
 
   @Delete(':id')
-  deleteCategory(@Param('id', ParseIntPipe) id: Category['id']) {
+  deleteCategory(@Param('id', ParseIntPipe) id: number) {
     return this.categoryService.delete(id);
   }
 
