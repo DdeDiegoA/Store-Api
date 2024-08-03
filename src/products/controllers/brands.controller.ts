@@ -10,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateBrandDto, UpdateBrandDto } from 'src/products/dtos/brands.dto';
-import { Brand } from 'src/products/entities/brand.entitity';
 import { BrandsService } from 'src/products/services/brands.service';
 
 @ApiTags('brands')
@@ -24,7 +23,7 @@ export class BrandsController {
   }
 
   @Get(':id')
-  getBrandById(@Param('id', ParseIntPipe) id: Brand['id']) {
+  getBrandById(@Param('id', ParseIntPipe) id: number) {
     return this.brandsService.findOne(id);
   }
 
@@ -35,14 +34,14 @@ export class BrandsController {
 
   @Put(':id')
   updateBrand(
-    @Param('id', ParseIntPipe) id: Brand['id'],
+    @Param('id', ParseIntPipe) id: number,
     @Body() data: UpdateBrandDto,
   ) {
     return this.brandsService.update(id, data);
   }
 
   @Delete(':id')
-  deleteBrand(@Param('id', ParseIntPipe) id: Brand['id']) {
+  deleteBrand(@Param('id', ParseIntPipe) id: number) {
     return this.brandsService.delete(id);
   }
 }

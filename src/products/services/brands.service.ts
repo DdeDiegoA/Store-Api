@@ -1,62 +1,37 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateBrandDto, UpdateBrandDto } from 'src/products/dtos/brands.dto';
 import { Brand } from 'src/products/entities/brand.entitity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class BrandsService {
-  private idBrand = 1;
-  private brands: Brand[] = [
-    {
-      id: 1,
-      name: 'Apple',
-      niche: 'Tech',
-    },
-  ];
+  constructor(@InjectRepository(Brand) private brandRepo: Repository<Brand>) {}
 
   findAll() {
-    return this.brands;
+    return this.brandRepo.find();
   }
 
-  findOne(id: Brand['id']): Brand {
-    const brand = this.brands.find((brand) => brand.id === id);
+  async findOne(id: Brand['id']): Promise<Brand> {
+    const brand = await this.brandRepo.findOneBy({ id });
     if (!brand) {
       throw new NotFoundException(`the brand with the id ${id} doesnt exist`);
     }
     return brand;
   }
 
-  private findIndex(id: Brand['id']): number {
-    const index = this.brands.findIndex((brand) => brand.id === id);
-    if (index === -1) {
-      throw new NotFoundException(`the brand with the id ${id} doesnt exist`);
-    }
-    return index;
+  create(data: CreateBrandDto): Promise<Brand> {
+    const newBrand = this.brandRepo.create(data);
+    return this.brandRepo.save(newBrand);
   }
 
-  create(data: CreateBrandDto): Brand {
-    this.idBrand += 1;
-    const newBrand: Brand = {
-      id: this.idBrand,
-      ...data,
-    };
-    this.brands.push(newBrand);
-    return newBrand;
-  }
-
-  update(id: Brand['id'], data: UpdateBrandDto): Brand {
-    const brandIndex = this.findIndex(id);
-    const brand = this.brands[brandIndex];
-    const updatedBrand = {
-      ...brand,
-      ...data,
-    };
-    this.brands[brandIndex] = updatedBrand;
-    return updatedBrand;
+  async update(id: Brand['id'], data: UpdateBrandDto): Promise<Brand> {
+    const brand = await this.findOne(id);
+    this.brandRepo.merge(brand, data);
+    return this.brandRepo.save(brand);
   }
 
   delete(id: Brand['id']) {
-    const brandIndex = this.findIndex(id);
-    const deletedBrand = this.brands.splice(brandIndex, 1)[0];
-    return deletedBrand;
+    return this.brandRepo.delete(id);
   }
 }
