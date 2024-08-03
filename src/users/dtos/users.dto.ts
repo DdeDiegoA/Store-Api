@@ -9,14 +9,17 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
+  @ApiProperty()
   email: string;
 
   @IsNotEmpty()
   @IsNumber()
+  @ApiProperty()
   phone: number;
 
   @IsString()
   @IsNotEmpty()
+  @ApiProperty()
   country: string;
 }
 

@@ -9,9 +9,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { UpdateBrandDto } from 'src/products/dtos/brands.dto';
-import { CreateUserDto } from 'src/users/dtos/users.dto';
-import { User } from 'src/users/entities/users.entity';
+import { CreateUserDto, UpdateUserDto } from 'src/users/dtos/users.dto';
 import { UsersService } from '../services/users.service';
 
 @ApiTags('users')
@@ -24,18 +22,13 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get('task')
-  getTasks() {
-    return this.usersService.getTasks();
-  }
-
-  @Get(':id/orders')
-  getOrders(@Param('id', ParseIntPipe) id: User['id']) {
-    return this.usersService.getOrdersByUser(id);
-  }
+  // @Get(':id/orders')
+  // getOrders(@Param('id', ParseIntPipe) id: number) {
+  //   return this.usersService.getOrdersByUser(id);
+  // }
 
   @Get(':id')
-  getUserById(@Param('id', ParseIntPipe) id: User['id']) {
+  getUserById(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.findOne(id);
   }
 
@@ -46,14 +39,14 @@ export class UsersController {
 
   @Put(':id')
   updateUser(
-    @Param('id', ParseIntPipe) id: User['id'],
-    @Body() data: UpdateBrandDto,
+    @Param('id', ParseIntPipe) id: number,
+    @Body() data: UpdateUserDto,
   ) {
     return this.usersService.update(id, data);
   }
 
   @Delete(':id')
-  deleteUser(@Param('id', ParseIntPipe) id: User['id']) {
+  deleteUser(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.delete(id);
   }
 }

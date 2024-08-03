@@ -8,7 +8,7 @@ export class User {
   name: string;
   @Column({ type: 'varchar', length: 255, unique: true })
   email: string;
-  @Column({ type: 'int', unique: true })
+  @Column({ type: 'varchar', unique: true })
   phone: number;
   @Column({ type: 'varchar' })
   country: string;
