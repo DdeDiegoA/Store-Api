@@ -24,8 +24,11 @@ const API_KEY_PROD = 'prod3123123';
           username: user,
           password,
           database,
-          synchronize: true,
+          logging: true,
+          synchronize: false,
           autoLoadEntities: true,
+          entities: ['src/**/*.entity.ts'],
+          migrations: ['src/database/migrations/*.ts'],
         };
       },
     }),
